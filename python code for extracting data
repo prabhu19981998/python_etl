@@ -1,0 +1,30 @@
+# Extracting data from mysql database
+
+try:
+connection = msql.connect(host='localhost’,database='diamond’,user='root',password='****') 
+
+# creating a connection to mysql database
+
+if connection.is_connected():
+    db_Info = connection.get_server_info() 
+    print("Connected to MySQL Server version ", db_Info) # getting the 
+    server info
+    cursor = connection.cursor() 
+    cursor.execute("select database();") # selecting the database diamond
+    record = cursor.fetchone()
+    print("You're connected to database: ", record)
+    mycursor = connection.cursor()
+
+# executing the query to fetch all record from diamond record
+
+    mycursor.execute("SELECT * from diamond_record") 
+    table_rows = mycursor.fetchall()
+ 
+except Error as e:
+    print("Error while connecting to MySQL", e)
+ 
+finally:
+    if connection.is_connected():
+       cursor.close()
+       connection.close()
+       print('mysql connection is closed')
